@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/openclaw/src/skills/dashboard/app.py", line 23, in <module>
+    raise RuntimeError('DASH_USER and DASH_PASS environment variables required')
+RuntimeError: DASH_USER and DASH_PASS environment variables required

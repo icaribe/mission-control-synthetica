@@ -1,0 +1,29 @@
+{
+  "services": {
+    "dashboard": {
+      "type": "python",
+      "name": "dashboard",
+      "build": {
+        "path": "./openclaw/src/skills/dashboard"
+      },
+      "start": "python3 app.py"
+    }
+  },
+  "env": {
+    "TASK_USER": {
+      "label": "Basic‑Auth username for the dashboard"
+    },
+    "TASK_PASS": {
+      "label": "Basic‑Auth password for the dashboard"
+    },
+    "RAILWAY_TOKEN": {
+      "label": "Railway API token (future automated actions)"
+    },
+    "TG_BOT_TOKEN": {
+      "label": "Telegram bot token (future alert integrations)"
+    },
+    "ALERT_WEBHOOK": {
+      "label": "Webhook URL for future alert channels"
+    }
+  }
+}

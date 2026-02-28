@@ -1,0 +1,8 @@
+=== Test run 2026-02-28T14:55:12Z ===
+🔑 API key placeholder created (non-interactive).
+📦 conway-terminal CLI not found in PATH (expected in test mode).
+🔗 Would register MCP server with API key (dry-run).
+   Command: npx conway-terminal mcp register --api-key "dummy_api_key"
+✅ Registration step logged.
+🚀 Test completed. Open Claude Code and run '.conway status' to verify the MCP connection.
+📝 Log saved to /data/workspace/conway_test_simple.log
