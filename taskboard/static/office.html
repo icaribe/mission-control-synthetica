@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Digital Office</title>
+<style>
+  body {font-family: Arial, sans-serif; background:#1e1e1e; color:#ddd; margin:0; padding:20px;}
+  h1 {text-align:center;}
+  .office {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
+  .agent {background:#2b2b2b; border-radius:8px; width:120px; text-align:center; padding:10px;}
+  .agent img {width:80px; height:80px; border-radius:50%;}
+  .status {margin-top:5px; font-size:0.9em; color:#4caf50;}
+</style>
+</head>
+<body>
+<h1>Digital Office</h1>
+<div class="office" id="office"></div>
+<script>
+const agents = [
+  {name: 'Synthética', avatar: 'https://i.pravatar.cc/80?u=sintetica', status: 'working'},
+  {name: 'DevBot', avatar: 'https://i.pravatar.cc/80?u=devbot', status: 'idle'},
+  {name: 'WriterBot', avatar: 'https://i.pravatar.cc/80?u=writerbot', status: 'working'},
+  {name: 'DesignBot', avatar: 'https://i.pravatar.cc/80?u=designbot', status: 'idle'}
+];
+const container = document.getElementById('office');
+agents.forEach(a => {
+  const div = document.createElement('div');
+  div.className = 'agent';
+  div.innerHTML = `<img src="${a.avatar}" alt="${a.name}"><br><strong>${a.name}</strong><div class="status">${a.status}</div>`;
+  container.appendChild(div);
+});
+</script>
+</body>
+</html>

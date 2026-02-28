@@ -1,0 +1,23 @@
+{
+  "count": 1,
+  "messages": [
+    {
+      "organization_id": "3499e2b4-48e7-43d0-b2e2-7c652a2548e8",
+      "pod_id": "3499e2b4-48e7-43d0-b2e2-7c652a2548e8",
+      "inbox_id": "synthetica@agentmail.to",
+      "thread_id": "eb8f4a79-be3a-406f-8c98-2a297b256524",
+      "message_id": "<CAL3+f4x9Gk8LZuiRV0E7Zs8rh9pbE=+oTCtC2SQw-0KF0UJfHg@mail.gmail.com>",
+      "labels": ["received", "unread"],
+      "timestamp": "2026-02-27T01:08:38.000Z",
+      "from": "Igor Caribé <lagocaribe@gmail.com>",
+      "to": ["synthetica@agentmail.to"],
+      "subject": "Teste",
+      "preview": "Oi Synthética, esse é o seu novo e-mail!\n\nCaso consiga ler essa mensagem, avise-me!\n\nAmigavelmente,\nIgor!\n\n-- \n*Igor Lago Caribé - Filosofia UnB*\n",
+      "headers": {},
+      "smtp_id": "3cou4q91oin1i08ofqik08dp8uj0c5bqelhf1jg1",
+      "size": 6595,
+      "updated_at": "2026-02-27T01:08:48.352Z",
+      "created_at": "2026-02-27T01:08:48.352Z"
+    }
+  ]
+}

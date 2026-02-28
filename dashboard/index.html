@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Task Dashboard</title>
+  <style>
+    body{font-family:Arial, sans-serif;background:#f4f4f7;margin:0;padding:20px}
+    h1{margin:0 0 20px 0}
+    .board{display:flex;gap:16px;align-items:flex-start}
+    .col{flex:1;background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 8px 12px 8px;min-height:400px}
+    .col h2{font-size:14px;margin:6px 0 10px 6px; color:#555}
+    .task{border:1px solid #ddd;background:#fafafa;border-radius:6px;padding:8px;margin:8px 0 0 0;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+    .task h3{margin:0 0 6px 0;font-size:13px}
+    .muted{color:#777;font-size:12px}
+  </style>
+</head>
+<body>
+  <h1>Dashboard de Tarefas</h1>
+  <div id="board" class="board"></div>
+  <script src="script.js"></script>
+</body>
+</html>
