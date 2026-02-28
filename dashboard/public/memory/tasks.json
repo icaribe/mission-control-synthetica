@@ -1,0 +1,29 @@
+{
+  "columns": ["Backlog", "Em Progresso", "Aguardando", "Concluído"],
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "Configurar fallback AgentMail (OpenRouter -> Groq llama-3.3-70b-versatile) para todos os fluxos",
+      "assigned_to": "IGOR/AI",
+      "status": "Em Progresso",
+      "priority": "Alta",
+      "model": "groq/llama-3.3-70b-versatile",
+      "notes": "Atualizar agents.defaults.models e o merge; aplicar em todos os fluxos",
+      "subtasks": [
+        {"id": "task-001-1", "title": "Definir fallbacks: OpenRouter -> Groq llama-3.3-70b-versatile", "status": "Backlog", "assigned_to": "IGOR/AI"},
+        {"id": "task-001-2", "title": "Atualizar config para merge", "status": "Backlog", "assigned_to": "IGOR/AI"},
+        {"id": "task-001-3", "title": "Configurar AgentMail como provedor de fallback", "status": "Backlog", "assigned_to": "IGOR/AI"},
+        {"id": "task-001-4", "title": "Criar script de verificação de leitura/escrita com AgentMail", "status": "Backlog", "assigned_to": "IGOR/AI"}
+      ]
+    },
+    {
+      "id": "step-1",
+      "title": "Implementar teto de 350 tokens e thinking off (Passo 1)",
+      "assigned_to": "IA",
+      "status": "Concluído",
+      "notes": "Teto de 350 tokens, thinking off implementado",
+      "model": "default-tuning",
+      "time": "2026-02-27T05:52:00Z"
+    }
+  ]
+}

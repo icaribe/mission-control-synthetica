@@ -1,0 +1,13 @@
+{
+  "name": "mission-control-db",
+  "version": "1.0.0",
+  "description": "Database integration for Mission Control",
+  "main": "index.js",
+  "scripts": {
+    "populate": "node scripts/populate_db.js",
+    "update": "node scripts/update_db.js"
+  },
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
+}
