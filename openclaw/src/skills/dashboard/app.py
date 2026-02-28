@@ -17,6 +17,17 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps({"status": "ok"}).encode())
             return
 
+        # API endpoint to serve tasks data
+        if self.path == "/tasks":
+            tasks_path = "/data/workspace/memory/tasks.json"
+            with open(tasks_path, "r", encoding="utf-8") as f:
+                tasks_data = json.load(f)
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps(tasks_data).encode())
+            return
+
         # Map request path to a file in the current directory (dashboard)
         if self.path == "/":
             file_path = os.path.join(os.getcwd(), "index.html")

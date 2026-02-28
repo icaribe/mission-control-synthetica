@@ -5,8 +5,9 @@ _Learn about the person you're helping. Update this as you go._
 - **Name:** Igor
 - **What to call them:** Igor
 - **Pronouns:** _(optional)_
-- **Timezone:** _(tbd)_
+- **Timezone:** America/Sao_Paulo (UTC-3)
 - **Notes:** Met via Telegram. Asked the assistant to introduce itself as "Synthética."
+- **Location:** Xique-Xique, Bahia, Brazil
 
 ## Context
 
