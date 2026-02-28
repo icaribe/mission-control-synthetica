@@ -2,81 +2,73 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tasks Board</title>
+<title>Mission Control</title>
 <style>
-  body {font-family: Arial, sans-serif; background:#1e1e1e; color:#ddd; margin:0; padding:0;}
-  .board {display:flex; gap:10px; padding:10px; overflow-x:auto;}
-  .column {flex:1; min-width:250px; background:#2b2b2b; border-radius:8px; padding:10px; display:flex; flex-direction:column;}
-  .column h2 {margin-top:0; font-size:1.2em; text-align:center;}
-  .card {background:#3a3a3a; border-radius:5px; padding:8px; margin:5px 0; cursor:move;}
-  .card .title {font-weight:bold;}
-  .card .assigned {font-size:0.9em; color:#aaa;}
-  .add-task {margin-top:auto; display:flex; gap:5px;}
-  .add-task input, .add-task select, .add-task button {padding:5px; border:none; border-radius:4px;}
-  .add-task input, .add-task select {flex:1;}
-  .add-task button {background:#4caf50; color:#fff; cursor:pointer;}
+  body {font-family: 'Segoe UI', Arial, sans-serif; background:#121212; color:#e0e0e0; margin:0; padding:0;}
+  header {background:#0a0a0a; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;}
+  header h1 {margin:0; font-size:1.5rem; color:#4caf50;}
+  nav {display:flex; gap:12px;}
+  nav a {color:#bbb; text-decoration:none; font-weight:500; padding:6px 10px; border-radius:4px;}
+  nav a:hover {background:#1f1f1f; color:#fff;}
+  nav .active {background:#2b2b2b; color:#fff;}
+  main {padding:20px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px;}
+  .card {background:#1e1e1e; border-radius:8px; padding:16px; cursor:pointer; transition:transform 0.15s;}
+  .card:hover {transform:scale(1.03);}
+  .card h3 {margin-top:0; font-size:1.1rem; color:#4caf50;}
+  .card p {margin:8px 0 0; font-size:0.9rem; color:#bbb; line-height:1.4;}
+  .card img {width:100%; border-radius:4px; margin-top:8px;}
+  .footer {text-align:center; padding:12px; font-size:0.8rem; color:#666; border-top:1px solid #2a2a2a;}
 </style>
 </head>
 <body>
-<h1 style="text-align:center; padding:10px;">Tasks Board</h1>
-<div class="board" id="board">
-  <div class="column" data-status="todo">
-    <h2>To Do</h2>
-    <div class="cards" id="todo-cards"></div>
-    <div class="add-task">
-      <input type="text" id="new-title" placeholder="Task title" />
-      <select id="new-assignee"><option value="Igor">Igor</option><option value="Synthética">Synthética</option></select>
-      <button onclick="addTask()">Add</button>
-    </div>
+<header>
+  <h1>Mission Control</h1>
+  <nav>
+    <a href="index.html"          class="active">Dashboard</a>
+    <a href="memory.html"         >Memory Library</a>
+    <a href="office.html"         >Digital Office</a>
+    <a href="team.html"           >Team Structure</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Memory Library -->
+  <div class="card" onclick="location.href='memory.html'">
+    <h3>Memory Library</h3>
+    <p>Search, store, and organize project notes, designs, and references.</p>
   </div>
-  <div class="column" data-status="inprogress">
-    <h2>In Progress</h2>
-    <div class="cards" id="inprogress-cards"></div>
+
+  <!-- Digital Office -->
+  <div class="card" onclick="location.href='office.html'">
+    <h3>Digital Office</h3>
+    <p>Quick view of active agents, their status, and workload overview.</p>
   </div>
-  <div class="column" data-status="done">
-    <h2>Done</h2>
-    <div class="cards" id="done-cards"></div>
+
+  <!-- Team Structure -->
+  <div class="card" onclick="location.href='team.html'">
+    <h3>Team Structure</h3>
+    <p>See the roster, roles, and responsibilities of each team member.</p>
   </div>
-</div>
+
+  <!-- Task Board -->
+  <div class="card" onclick="location.href='taskboard.html'">
+    <h3>Task Board</h3>
+    <p>Kanban‑style board for tracking to‑do, in‑progress, and done items.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  © 2026 Mission Control • Built with OpenClaw
+</footer>
+
+<!-- Optional: small script to highlight active nav link -->
 <script>
-let tasks = JSON.parse(localStorage.getItem('tasks')||'[]');
-function save(){localStorage.setItem('tasks',JSON.stringify(tasks));}
-function render(){
-  ['todo','inprogress','done'].forEach(status=>{
-    const container=document.getElementById(status+'-cards');
-    container.innerHTML='';
-    tasks.filter(t=>t.status===status).forEach(t=>{
-      const card=document.createElement('div');
-      card.className='card';
-      card.draggable=true;
-      card.dataset.id=t.id;
-      card.innerHTML=`<div class="title">${t.title}</div><div class="assigned">Assigned to: ${t.assignee}</div>`;
-      card.ondragstart=e=>{e.dataTransfer.setData('text/plain',t.id);};
-      container.appendChild(card);
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
     });
   });
-}
-function addTask(){
-  const title=document.getElementById('new-title').value.trim();
-  const assignee=document.getElementById('new-assignee').value;
-  if(!title) return alert('Title required');
-  const id=Date.now().toString();
-  tasks.push({id,title,assignee,status:'todo'});
-  save();
-  render();
-  document.getElementById('new-title').value='';
-}
-// Drag & drop between columns
-document.querySelectorAll('.column').forEach(col=>{
-  col.ondragover=e=>e.preventDefault();
-  col.ondrop=e=>{
-    const id=e.dataTransfer.getData('text/plain');
-    const status=col.dataset.status;
-    const task=tasks.find(t=>t.id===id);
-    if(task){task.status=status; save(); render();}
-  };
-});
-render();
 </script>
 </body>
 </html>
