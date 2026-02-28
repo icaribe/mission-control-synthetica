@@ -18,7 +18,11 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         # Map request path to a file in the current directory (dashboard)
-        file_path = os.path.join(os.getcwd(), self.path.strip("/"))
+        if self.path == "/":
+            file_path = os.path.join(os.getcwd(), "index.html")
+        else:
+            file_path = os.path.join(os.getcwd(), self.path.strip("/"))
+        
         if not os.path.isfile(file_path):
             self.send_response(404)
             self.end_headers()
