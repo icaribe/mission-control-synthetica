@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tasks Board</title>
+<style>
+  body {font-family: Arial, sans-serif; background:#1e1e1e; color:#ddd; margin:0; padding:0;}
+  .board {display:flex; gap:10px; padding:10px; overflow-x:auto;}
+  .column {flex:1; min-width:250px; background:#2b2b2b; border-radius:8px; padding:10px; display:flex; flex-direction:column;}
+  .column h2 {margin-top:0; font-size:1.2em; text-align:center;}
+  .card {background:#3a3a3a; border-radius:5px; padding:8px; margin:5px 0; cursor:move;}
+  .card .title {font-weight:bold;}
+  .card .assigned {font-size:0.9em; color:#aaa;}
+  .add-task {margin-top:auto; display:flex; gap:5px;}
+  .add-task input, .add-task select, .add-task button {padding:5px; border:none; border-radius:4px;}
+  .add-task input, .add-task select {flex:1;}
+  .add-task button {background:#4caf50; color:#fff; cursor:pointer;}
+</style>
+</head>
+<body>
+<h1 style="text-align:center; padding:10px;">Tasks Board</h1>
+<div class="board" id="board">
+  <div class="column" data-status="todo">
+    <h2>To Do</h2>
+    <div class="cards" id="todo-cards"></div>
+    <div class="add-task">
+      <input type="text" id="new-title" placeholder="Task title" />
+      <select id="new-assignee"><option value="Igor">Igor</option><option value="Synthética">Synthética</option></select>
+      <button onclick="addTask()">Add</button>
+    </div>
+  </div>
+  <div class="column" data-status="inprogress">
+    <h2>In Progress</h2>
+    <div class="cards" id="inprogress-cards"></div>
+  </div>
+  <div class="column" data-status="done">
+    <h2>Done</h2>
+    <div class="cards" id="done-cards"></div>
+  </div>
+</div>
+
+<script>
+const statusToColumn = {
+  'Backlog': 'todo',
+  'Em Progresso': 'inprogress',
+  'Concluído': 'done',
+  'Aguardando': 'todo' // fallback
+};
+
+function renderTasks(tasks) {
+  // Clear all column card containers
+  document.querySelectorAll('.column').forEach(col => {
+    col.querySelector('.cards').innerHTML = '';
+  });
+
+  tasks.forEach(task => {
+    const columnKey = statusToColumn[task.status] || 'todo';
+    const column = document.querySelector(`.column[data-status="${columnKey}"]`);
+    if (!column) return;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.draggable = true;
+    card.dataset.id = task.id;
+    const assigned = task.assigned_to || 'Unassigned';
+    card.innerHTML = `<div class="title">${task.title}</div><div class="assigned">Assigned to: ${assigned}</div>`;
+    // Enable drag start
+    card.ondragstart = e => {
+      e.dataTransfer.setData('text/plain', task.id);
+    };
+    column.querySelector('.cards').appendChild(card);
+  });
+}
+
+// Fetch tasks from the /tasks endpoint
+fetch('/tasks')
+  .then(r => {
+    if (!r.ok) throw new Error('Network response was not ok');
+    return r.json();
+  })
+  .then(data => {
+    // Assuming the endpoint returns the tasks array directly or under 'tasks' key
+    const tasks = data.tasks || data; // support both formats
+    renderTasks(tasks);
+  })
+  .catch(err => {
+    console.error('Failed to load tasks:', err);
+    // Fallback: maybe load from localStorage as before
+    // Let's keep old logic as fallback
+    let stored = JSON.parse(localStorage.getItem('tasks')||'[]');
+    renderTasks(stored);
+  });
+
+function addTask(){
+  const title=document.getElementById('new-title').value.trim();
+  const assignee=document.getElementById('new-assignee').value;
+  if(!title) return alert('Title required');
+  const id=Date.now().toString();
+  // Use the same structure as existing tasks for consistency
+  fetch('/tasks', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({id, title, assigned_to: assignee, status: 'Backlog'})
+  })
+  .then(r => r.json())
+  .then(data => {
+    // Refresh the list
+    fetch('/tasks')
+      .then(r => r.json())
+      .then(tasks => renderTasks(tasks))
+      .catch(err => console.error('Refresh failed', err));
+  })
+  .catch(err => console.error('Add task failed', err));
+}
+</script>
+</body>
+</html>
