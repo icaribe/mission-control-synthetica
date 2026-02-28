@@ -1,1 +1,1 @@
-web: python3 -m http.server 8080 --directory /data/workspace --bind 0.0.0.0
+web: ./start.sh
