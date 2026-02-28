@@ -9,8 +9,8 @@ COPY openclaw/src/skills/dashboard /app
 # Switch to the app user
 USER appuser
 
-# Expose the port the dashboard runs on
-EXPOSE 5000
+# Expose the port the dashboard runs on (PORT env var provided by Railway, fallback 5000)
+EXPOSE ${PORT:-5000}
 
 # Run the dashboard
 CMD ["python", "app.py"]
