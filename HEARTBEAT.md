@@ -4,4 +4,4 @@
 
 # Add tasks below when you want the agent to check something periodically.
 
-- Check AgentMail inbox for new messages and notify Igor if any.
+#
