@@ -50,6 +50,22 @@ class Handler(BaseHTTPRequestHandler):
             self._json_response({"tasks": tasks})
             return
 
+        # API endpoint to serve memories data
+        if self.path.startswith("/api/memories"):
+            # Extract path part before any query string
+            path_part = self.path.split('?', 1)[0]
+            if path_part == "/api/memories":
+                memories = []
+                memory_dir = "/data/workspace/memory"
+                if os.path.isdir(memory_dir):
+                    for filename in os.listdir(memory_dir):
+                        if filename.endswith(".md"):
+                            with open(os.path.join(memory_dir, filename), "r", encoding="utf-8") as f:
+                                content = f.read()
+                            memories.append({"title": filename, "content": content})
+                self._json_response({"memories": memories})
+                return
+
         # Map request path to a file in the current directory (dashboard)
         base_dir = os.path.dirname(os.path.abspath(__file__))
         if self.path == "/":

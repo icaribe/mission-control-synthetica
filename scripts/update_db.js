@@ -26,7 +26,12 @@ async function upsertTask(task, agentId) {
       agentId,
     ]
   );
-  return result.rows[0].id;
+  if (result.rows.length > 0) {
+    return result.rows[0].id;
+  } else {
+    const selectResult = await db.query('SELECT id FROM tasks WHERE title = $1', [task.title]);
+    return selectResult.rows[0].id;
+  }
 }
 
 async function main() {

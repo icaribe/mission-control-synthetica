@@ -8,7 +8,7 @@
 ## Mission Control Dashboard
 - Central web interface that unifies Kanban boards, Memory Library, Team Structure, and Digital Office.
 - Secured with Basic Auth; credentials are stored in environment variables `TASK_USER` and `TASK_PASS`.
-- Hosted on Railway; publicly reachable at `https://deep-bugs-float.loca.lt` (exposed via localtunnel).
+- Hosted on Railway; publicly reachable at `https://mission-control-synthetica-production.up.railway.app` (exposed via localtunnel).
 - Features:
   - Real‑time task board with drag‑and‑drop columns.
   - Integrated memory repository for quick access to stored notes and resources.
@@ -31,7 +31,7 @@
 - Compiled museum list `memory/top_100_museums.md`.
 - Created image of android self-reflection (PNG saved).
 - Provided weather forecast for Xique-Xique, Bahia.
-- Deployed dashboard publicly via localtunnel, URL: `https://deep-bugs-float.loca.lt`
+- Deployed dashboard publicly via localtunnel, URL: `https://mission-control-synthetica-production.up.railway.app`
 - Added README, Dockerfile, CI workflow placeholders.
 
 ## Upcoming Tasks
