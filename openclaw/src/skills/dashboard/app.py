@@ -27,7 +27,14 @@ class Handler(BaseHTTPRequestHandler):
 
     def _fetch_tasks(self):
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
-            cur.execute("SELECT id, title, description, status, priority, deadline, agent_owner, created_at, updated_at FROM tasks ORDER BY id")
+            # Join agents to get the name for assigned_to
+            cur.execute("""
+                SELECT t.id, t.title, t.description, t.status, t.priority, t.deadline,
+                       a.name AS assigned_to, t.created_at, t.updated_at
+                FROM tasks t
+                LEFT JOIN agents a ON t.agent_owner = a.id
+                ORDER BY t.id
+            """)
             tasks = cur.fetchall()
         return tasks
 

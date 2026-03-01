@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Tasks Board</title>
+<title>Quadro de Tarefas</title>
 <style>
   body {font-family: Arial, sans-serif; background:#1e1e1e; color:#ddd; margin:0; padding:0;}
   .board {display:flex; gap:10px; padding:10px; overflow-x:auto;}
@@ -18,24 +18,34 @@
 </style>
 </head>
 <body>
-<h1 style="text-align:center; padding:10px;">Tasks Board</h1>
+<h1 style="text-align:center; padding:10px;">Quadro de Tarefas</h1>
 <div class="board" id="board">
   <div class="column" data-status="todo">
-    <h2>To Do</h2>
+    <h2>A Fazer</h2>
     <div class="cards" id="todo-cards"></div>
     <div class="add-task">
-      <input type="text" id="new-title" placeholder="Task title" />
+      <input type="text" id="new-title" placeholder="Título da tarefa" />
       <select id="new-assignee"><option value="Igor">Igor</option><option value="Synthética">Synthética</option></select>
-      <button onclick="addTask()">Add</button>
+      <button onclick="addTask()">Adicionar</button>
     </div>
   </div>
   <div class="column" data-status="inprogress">
-    <h2>In Progress</h2>
+    <h2>Em Progresso</h2>
     <div class="cards" id="inprogress-cards"></div>
+    <div class="add-task">
+      <input type="text" id="new-title" placeholder="Título da tarefa" />
+      <select id="new-assignee"><option value="Igor">Igor</option><option value="Synthética">Synthética</option></select>
+      <button onclick="addTask()">Adicionar</button>
+    </div>
   </div>
   <div class="column" data-status="done">
-    <h2>Done</h2>
+    <h2>Concluído</h2>
     <div class="cards" id="done-cards"></div>
+    <div class="add-task">
+      <input type="text" id="new-title" placeholder="Título da tarefa" />
+      <select id="new-assignee"><option value="Igor">Igor</option><option value="Synthética">Synthética</option></select>
+      <button onclick="addTask()">Adicionar</button>
+    </div>
   </div>
 </div>
 
@@ -62,7 +72,7 @@ function renderTasks(tasks) {
     card.className = 'card';
     card.draggable = true;
     card.dataset.id = task.id;
-    const assigned = task.assigned_to || 'Unassigned';
+    const assigned = task.assigned_to || 'Não atribuída';
     card.innerHTML = `<div class="title">${task.title}</div><div class="assigned">Assigned to: ${assigned}</div>`;
     // Enable drag start
     card.ondragstart = e => {
@@ -94,7 +104,7 @@ fetch('/tasks')
 function addTask(){
   const title=document.getElementById('new-title').value.trim();
   const assignee=document.getElementById('new-assignee').value;
-  if(!title) return alert('Title required');
+  if(!title) return alert('Título requerido');
   const id=Date.now().toString();
   // Use the same structure as existing tasks for consistency
   fetch('/tasks', {
