@@ -1,4 +1,4 @@
-# MEMORY.md - Durable Memories (as of 2026-02-28)
+# MEMORY.md - Durable Memories (as of 2026-03-01)
 
 ## Project Overview
 - Developed Mission Control dashboard with Kanban, Memory Library, Team Structure, and Digital Office.
@@ -26,19 +26,16 @@
 - Set up daily cron `daily_concurso_search` for public contests in Bahia.
 - Spawned sub-agent `subagent_concurso_search` for periodic contest scraping.
 
-## Recent Actions (2026-02-28)
-- Generated ebook `memory/top_100_museums_ebook.md` with placeholder images.
-- Compiled museum list `memory/top_100_museums.md`.
-- Created image of android self-reflection (PNG saved).
-- Provided weather forecast for Xique-Xique, Bahia.
-- Deployed dashboard publicly via localtunnel, URL: `https://mission-control-synthetica-production.up.railway.app`
-- Added README, Dockerfile, CI workflow placeholders.
+## Recent Actions (2026-03-01)
+- Integrated CI/CD pipeline with GitHub Actions (workflow located at `.github/workflows/ci.yml`).
+- Published latest MEMORY.md updates to the repository.
+- Refined dashboard UI/UX, enhancing Kanban fluidity and agenda widget smoothness.
+- Attempted MiniMax M2.1 CLI installation; binary not found; using API instead.
 
 ## Upcoming Tasks
-- Integrate CI pipeline with GitHub.
-- Push updated `MEMORY.md` to GitHub repository.
 - Continue refining dashboard UI/UX.
-- User location: Xique-Xique, Bahia, Brazil
+- Further integrate API access for MiniMax M2.1.
+- Maintain memory sync and cron automation.
 
 ## Timezone Handling
 - For time-related queries, respond with just the current time in the format "agora são HH:MM", using the user's local timezone (America/Sao_Paulo) but without explicitly mentioning it or the location.

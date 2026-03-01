@@ -92,6 +92,35 @@ class Handler(BaseHTTPRequestHandler):
         with open(file_path, "rb") as f:
             self.wfile.write(f.read())
 
+    def do_POST(self):
+        # Only allow POST on /tasks for creating new tasks
+        if self.path == "/tasks":
+            ctype = self.headers.get('Content-Type')
+            if ctype != 'application/json':
+                self.send_response(415)
+                self.end_headers()
+                return
+            length = int(self.headers.get('Content-Length', 0))
+            data = json.loads(self.rfile.read(length))
+            title = data.get('title')
+            description = data.get('description', '')
+            status = data.get('status', 'Backlog')
+            priority = data.get('priority', 'Low')
+            assigned_to = data.get('assigned_to', 'IA')
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO tasks (title, description, status, priority, assigned_to)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, (title, description, status, priority, assigned_to))
+                task_id = cur.lastrowid
+            conn.commit()
+            new_task = {"id": task_id, "title": title, "description": description,
+                        "status": status, "priority": priority, "assigned_to": assigned_to}
+            self._json_response(new_task, 201)
+        else:
+            self.send_response(404)
+            self.end_headers()
+
 if __name__ == "__main__":
     server = HTTPServer((HOST, PORT), Handler)
     server.serve_forever()
