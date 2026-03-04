@@ -1,22 +1,57 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset='utf-8'>
-  <title>Task Dashboard</title>
+  <meta charset="UTF-8" />
+  <title>Dashboard de Aprendizado de Alemão</title>
   <style>
-    body{font-family:Arial, sans-serif;background:#f4f4f7;margin:0;padding:20px}
-    h1{margin:0 0 20px 0}
-    .board{display:flex;gap:16px;align-items:flex-start}
-    .col{flex:1;background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 8px 12px 8px;min-height:400px}
-    .col h2{font-size:14px;margin:6px 0 10px 6px; color:#555}
-    .task{border:1px solid #ddd;background:#fafafa;border-radius:6px;padding:8px;margin:8px 0 0 0;box-shadow:0 1px 2px rgba(0,0,0,.05)}
-    .task h3{margin:0 0 6px 0;font-size:13px}
-    .muted{color:#777;font-size:12px}
+    body {font-family: Arial, sans-serif; margin: 20px; background:#f9f9f9;}
+    h1 {color:#2c3e50;}
+    .phase {margin-bottom:30px;}
+    .phase h2 {color:#34495e;}
+    .progress {background:#e0e0e0; border-radius:5px; overflow:hidden; height:24px; width:100%;}
+    .progress div {height:100%; background:#27ae60; width:0%; transition:width .4s;}
+    .details {margin-top:10px;}
+    .details ul {list-style:none; padding:0;}
+    .details li {margin:4px 0;}
   </style>
 </head>
 <body>
-  <h1>Dashboard de Tarefas</h1>
-  <div id="board" class="board"></div>
-  <script src="script.js"></script>
+  <h1>📊 Dashboard de Aprendizado de Alemão</h1>
+  <div id="dashboard"></div>
+
+  <script>
+    // Estrutura básica das fases (mesmo que no plano)
+    const phases = [
+      {id:"phase1", name:"Iniciante (0‑3 meses)", weeks:12},
+      {id:"phase2", name:"Intermediário (3‑9 meses)", weeks:24},
+      {id:"phase3", name:"Avançado (9‑18 meses)", weeks:36}
+    ];
+
+    // Carrega progresso (arquivo JSON) ou cria padrão
+    fetch('progress.json')
+      .then(r=>r.ok? r.json() : Promise.resolve({}))
+      .then(data=>{
+        const container = document.getElementById('dashboard');
+        phases.forEach(p=>{
+          const prog = data[p.id] ?? {completedWeeks:0, completedDays:0};
+          const percent = Math.round((prog.completedWeeks / p.weeks) * 100);
+          const el = document.createElement('div');
+          el.className='phase';
+          el.innerHTML = `
+            <h2>${p.name}</h2>
+            <div class="progress"><div style="width:${percent}%"></div></div>
+            <div class="details">
+              <ul>
+                <li>Semanas concluídas: ${prog.completedWeeks} / ${p.weeks}</li>
+                <li>Dias de prática: ${prog.completedDays}</li>
+                <li>Progresso: ${percent}%</li>
+              </ul>
+            </div>
+          `;
+          container.appendChild(el);
+        });
+      })
+      .catch(err=>console.error('Erro ao carregar progresso', err));
+  </script>
 </body>
 </html>

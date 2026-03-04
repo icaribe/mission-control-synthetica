@@ -2,7 +2,7 @@
 /**
  * Script to refresh dashboard data from all memory files.
  * Copies every file from memory/ to dashboard/public/memory/
- * so the front‑end can fetch them directly.
+ * so the front-end can fetch them directly.
  */
 const fs = require('fs');
 const path = require('path');
